@@ -7,6 +7,7 @@ import breakpointsContent from "@lib/content/breakpointsContent";
 import dimensionsContent from "@lib/content/dimensionsContent";
 import { getGridCols, getGridGap, getGridRows } from "@lib/utilities/helpers";
 import Cell from "./Cell";
+import DynamicCell from "./DynamicCell";
 
 export default function GridGen() {
   const { urlParam } = breakpointsContent;
@@ -26,16 +27,26 @@ export default function GridGen() {
   const length = selectedCols * selectedRows;
   const divs = Array.from({ length }, () => 0);
 
+  const handleDrag = () => {
+    // Implement drag logic here
+  };
+
   return (
     <>
       <Breakpoints />
       <Dimensions />
-      <div
-        className={`grid ${colsClass} ${rowsClass} ${gapClass} w-full h-full bg-default-50 rounded-lg`}
-      >
-        {divs.map((div, i) => (
-          <Cell key={`grid-cell-${i + 1}`} />
-        ))}
+      <div className="resize  bg-white"></div>
+      <div className="relative w-full h-full">
+        <div
+          className={`grid ${colsClass} ${rowsClass} ${gapClass} w-full h-full bg-default-50 rounded-lg`}
+        >
+          {divs.map((div, i) => (
+            <Cell key={`grid-cell-${i + 1}`} />
+          ))}
+        </div>
+        <div className="absolute z-50 top-0 bottom-0 left-0 right-0">
+          <DynamicCell height={60} width={60} />
+        </div>
       </div>
     </>
   );
