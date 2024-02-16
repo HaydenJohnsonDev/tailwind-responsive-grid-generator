@@ -3,9 +3,9 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./lib/utilities/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -17,14 +17,26 @@ const config: Config = {
       },
     },
   },
-  darkMode: "class",
   plugins: [
     nextui({
       addCommonColors: false, // override common colors (e.g. "blue", "green", "pink").
       prefix: "nextui", // prefix for themes variables
       defaultTheme: "light", // default theme from the themes object
       defaultExtendTheme: "light", // default theme to extend on custom themes
-      layout: {}, // common layout tokens (applied to all themes)
+      layout: {
+        fontSize: {
+          tiny: "0.875rem", // text-tiny
+          small: "1rem", // text-small
+          medium: "1.125rem", // text-medium
+          large: "1.25rem", // text-large
+        },
+        lineHeight: {
+          tiny: "1.25rem", // text-tiny
+          small: "1.5rem", // text-small
+          medium: "1.75rem", // text-medium
+          large: "2rem", // text-large
+        },
+      }, // common layout tokens (applied to all themes)
       themes: {
         light: {
           colors: {
