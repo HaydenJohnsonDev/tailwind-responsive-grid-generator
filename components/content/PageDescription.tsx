@@ -13,11 +13,11 @@ export default function PageDescription() {
   return (
     <p className="text-center">
       {descFirst[0]}
-      <Link href={userHref} size="lg" isExternal>
+      <Link href={userHref} isExternal>
         {userLabel}
       </Link>
       {descFirst[1].split("[pageLink]")[0]}
-      <Link href={pageHref} size="lg" isExternal>
+      <Link href={pageHref} isExternal>
         {pageLabel}
       </Link>
       {descFirst[1].split("[pageLink]")[1]}
