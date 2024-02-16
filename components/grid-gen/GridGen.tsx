@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
 import Breakpoints from "@components/grid-gen/Breakpoints";
 import Dimensions from "@components/grid-gen/Dimensions";
 import breakpointsContent from "@lib/content/breakpointsContent";
@@ -8,6 +9,7 @@ import dimensionsContent from "@lib/content/dimensionsContent";
 import { getGridCols, getGridGap, getGridRows } from "@lib/utilities/helpers";
 import Cell from "./Cell";
 import DynamicCell from "./DynamicCell";
+import { useEffect, useRef, useState } from "react";
 
 export default function GridGen() {
   const { urlParam } = breakpointsContent;
@@ -27,9 +29,20 @@ export default function GridGen() {
   const length = selectedCols * selectedRows;
   const divs = Array.from({ length }, () => 0);
 
-  const handleDrag = () => {
-    // Implement drag logic here
-  };
+  // Top div
+  const constraintsRef = useRef(null);
+
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+
+  useEffect(() => {
+    // Access the div's width and height
+    if (constraintsRef.current) {
+      const { offsetWidth, offsetHeight } = constraintsRef.current;
+      setWidth(offsetWidth);
+      setHeight(offsetHeight);
+    }
+  }, [constraintsRef.current]);
 
   return (
     <>
@@ -44,9 +57,17 @@ export default function GridGen() {
             <Cell key={`grid-cell-${i + 1}`} />
           ))}
         </div>
-        <div className="absolute z-50 top-0 bottom-0 left-0 right-0">
-          <DynamicCell height={60} width={60} />
-        </div>
+        <motion.div
+          className="absolute z-50 top-0 bottom-0 left-0 right-0"
+          ref={constraintsRef}
+        >
+          <DynamicCell
+            {...{ constraintsRef, height, width }}
+            cols={selectedCols}
+            rows={selectedRows}
+            gap={selectedGap}
+          />
+        </motion.div>
       </div>
     </>
   );
